@@ -26,34 +26,87 @@
             Usa un array predefinito per scegliere casualmente:
      -->
 
+    <!-- 
+     📌 Milestone 3: Usare una Modale per Aggiungere Animali
+         Espandilo affinché:
+
+         La vecchia prop content può essere usata per passare un componente qualsiasi.
+         Un nuovo div in fondo alla modale contiene il bottone Annulla e un nuovo bottone Conferma.
+         Una nuova prop onConfirm si aspetta una funzione per gestire l’azione di conferma.
+         Sostituisci l’aggiunta casuale dell’animale con una modale interattiva:
+        cliccando il bottone "Aggiungi Animale," si apre una modale.
+        La modale include un input di testo (passato al prop content) per inserire il nome di un animale.
+        Conferma: Aggiunge l’animale alla lista e chiude la modale.
+        Annulla: Chiude la modale senza modificare la lista.
+
+        Obiettivo: L’utente può aggiungere animali specifici utilizzando la modale.
+     -->
+
     <script type="text/babel">
         const { useState } = React;
-        const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
+        const { createPortal } = ReactDOM;
+        /* const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"]; */
 
+
+        function Modal({ title, content, show, onClose, onConfirm }) {
+            return show ? createPortal(
+                <div className="modal-container">
+                    <div className="modal">
+                        <h2>{title}</h2>
+                        {content}
+                        <div>
+                            <button onClick={onConfirm}>Conferma</button>
+                            <button onClick={onClose}>Annulla</button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            ) : null;
+        }
 
         function AnimalsList() {
             const [animals, setAnimals] = useState([]);
+            const [showModal, setShowModal] = useState(false);
+            const [animalName, setAnimalName] = useState("");
+            /*  function addRandomAnimal() {
+                 const newAnimal = animalsChoices[Math.floor(Math.random() * animalsChoices.length)];
+                 setAnimals([...animals, newAnimal]);
+             } */
 
-            function addRandomAnimal() {
-                const newAnimal = animalsChoices[Math.floor(Math.random() * animalsChoices.length)];
-                setAnimals([...animals, newAnimal]);
+            function addAnimal() {
+                setAnimals([...animals, animalName]);
+                setAnimalName("");
+                setShowModal(false);
             }
+
+
 
 
             return (
 
-                <div className="container">
-                    <button onClick={addRandomAnimal}>Aggiungi Animali</button>
-                    <details>
-                        <summary>Animali</summary>
-                        <ul>{animals.map((a, index) =>
-                            <li key={index}>{a}</li>
-                        )}
-                        </ul>
-                    </details>
-                </div>
+                <div>
+                    <button onClick={() => setShowModal(true)}>Aggiungi Animale</button>
 
-            )
+                    <Modal
+                        title="Inserisci un animale"
+                        show={showModal}
+                        content={
+                            <input
+                                type="text"
+                                value={animalName}
+                                onChange={(e) => setAnimalName(e.target.value)}
+                                placeholder="Nome animale"
+                            />
+                        }
+                        onClose={() => setShowModal(false)}
+                        onConfirm={addAnimal}
+                    />
+
+                    <ul>
+                        {animals.map((a, i) => <li key={i}>{a}</li>)}
+                    </ul>
+                </div>
+            );
         }
     </script>
 
