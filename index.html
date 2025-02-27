@@ -6,6 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I miei animali Preferiti</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 📌 Milestone 1: Inserire un Componente React
+      Monta un componente React all’interno dell’elemento con classe .lista-animali.
+
+      Il componente deve includere:
+      Un elemento <details> con titolo "Animali", che contiene:
+      Una lista <ul> statica che viene creata a partire da un array di stringhe (animals) dove ciascuna stringa rappresenta il nome di un animale.
+
+      Obiettivo: Mostrare la struttura base della lista di animali con un <details> che può essere espanso o contratto. -->
+
+    <script type="text/babel">
+        const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
+        function AnimalsList() {
+            return (
+                <details>
+                    <summary>Animali</summary>
+                    <ul>{animalsChoices.map((a, index) =>
+                        <li key={index}>{a}</li>
+                    )}
+                    </ul>
+                </details>
+            )
+        }
+    </script>
+
+    <script type="text/babel">
+        const { createRoot } = ReactDOM;
+        const listaAnimali = document.querySelector('.lista-animali');
+        const root = createRoot(listaAnimali);
+        root.render(<AnimalsList />)
+
+    </script>
+
 </head>
 
 <body>
