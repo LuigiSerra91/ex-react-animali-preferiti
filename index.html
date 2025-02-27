@@ -86,7 +86,13 @@
 
                 <div>
                     <button onClick={() => setShowModal(true)}>Aggiungi Animale</button>
-
+                    <details>
+                        <summary>Animali</summary>
+                        <ul>
+                            {animals.map((a, index) =>
+                                <li key={index}>{a}</li>)}
+                        </ul>
+                    </details>
                     <Modal
                         title="Inserisci un animale"
                         show={showModal}
