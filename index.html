@@ -31,8 +31,6 @@
         const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
 
 
-
-
         function AnimalsList() {
             const [animals, setAnimals] = useState([]);
 
@@ -40,6 +38,7 @@
                 const newAnimal = animalsChoices[Math.floor(Math.random() * animalsChoices.length)];
                 setAnimals([...animals, newAnimal]);
             }
+
 
             return (
 
