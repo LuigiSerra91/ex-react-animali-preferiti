@@ -16,19 +16,44 @@
       Un elemento <details> con titolo "Animali", che contiene:
       Una lista <ul> statica che viene creata a partire da un array di stringhe (animals) dove ciascuna stringa rappresenta il nome di un animale.
 
-      Obiettivo: Mostrare la struttura base della lista di animali con un <details> che può essere espanso o contratto. -->
+      Obiettivo: Mostrare la struttura base della lista di animali con un <details> che può essere espanso o contratto.
+     -->
+
+    <!-- 📌 Milestone 2: Aggiungere Animali Casuali
+            Trasforma l’array animals usando useState (l’array è inizialmente vuoto).
+            Aggiungi un bottone "Aggiungi Animale" sopra il <details>.
+            Cliccando il bottone, un animale casuale viene aggiunto alla lista.
+            Usa un array predefinito per scegliere casualmente:
+     -->
 
     <script type="text/babel">
+        const { useState } = React;
         const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
+
+
+
+
         function AnimalsList() {
+            const [animals, setAnimals] = useState([]);
+
+            function addRandomAnimal() {
+                const newAnimal = animalsChoices[Math.floor(Math.random() * animalsChoices.length)];
+                setAnimals([...animals, newAnimal]);
+            }
+
             return (
-                <details>
-                    <summary>Animali</summary>
-                    <ul>{animalsChoices.map((a, index) =>
-                        <li key={index}>{a}</li>
-                    )}
-                    </ul>
-                </details>
+
+                <div className="container">
+                    <button onClick={addRandomAnimal}>Aggiungi Animali</button>
+                    <details>
+                        <summary>Animali</summary>
+                        <ul>{animals.map((a, index) =>
+                            <li key={index}>{a}</li>
+                        )}
+                        </ul>
+                    </details>
+                </div>
+
             )
         }
     </script>
